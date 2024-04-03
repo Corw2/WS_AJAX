@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<style type="text/css">
+		
+			body {
+				color:red;
+				background-color:black;				
+			}
+		
+		
+			h1{
+				color:red;
+				font-size:70px;
+				text-shadow:3px 3px 3px orange
+			}
+		
+		
+			img {
+				width:300px;
+				height:auto;
+				border-radius:30px;
+			}
+		
+		</style>
+		
+		
+		<script type="text/javascript">
+		
+			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+		
+		
+			// const DESTINOS = ["USA", "VERDE", "HATE", "PALILLOS"]; // 4
+					
+			// const DIRECTO = ["miami.txt", "asturias.txt", "java.txt", "bar.txt"];
+			
+			// https://www.geeksforgeeks.org/how-to-convert-map-keys-to-an-array-in-javascript/
+					
+			//alert(DESTINOS);
+
+			
+			// MEMORIZAR EL ÚLTIMO DESTINO PARA NO REPETIRLO 2 VECES SEGUIDAS.
+			var vezAnterior = "";
+			
+			
+			const mapa = new Map();
+			
+			mapa.set("USA", 	 "miami");
+			mapa.set("VERDE", 	 "asturias");
+			mapa.set("HATE", 	 "java");
+			mapa.set("PALILLOS", "bar");
+			
+			//alert(mapa);
+			
+			//alert("MAPA KEYS ... " + mapa.keys());
+			
+			
+			
+			// CONVERTIR LAS CLAVES DEL MAPA EN UN ARRAY
+			//	(uso de la helper class Array de JavaScript):
+				
+			const DESTINOS = Array.from( mapa.keys() );
+			
+			
+			
+			
+			function f_elegirDestinoAleatorio() {
+				
+				var aleatorio = parseInt(Math.random() * DESTINOS.length); // [0..3]
+				
+				//alert("QUIERES ... " + DESTINOS[aleatorio] + 
+				//			" \n\n\t " + mapa.get(DESTINOS[aleatorio]));
+				
+				// OBTENER EL VALUE DEL MAPA CORRESPONDIENTE AL KEY ALEATORIO
+				return mapa.get( DESTINOS[aleatorio] ); // fichero .txt a ser obtenido por AJAX
+				
+			}
+				
+			
+			
+			
+			// AJAX:
+			
+			function f_cogerVacacionesAJAX() {
+				
+				const destino = f_elegirDestinoAleatorio();
+				
+				//alert("DESTINO: " + destino);
+				
+				
+				
+				///////////////// AJAX /////////////////////
+
+	        	// OBJETO NEGOCIADOR AJAX:
+	            var negociador = new XMLHttpRequest();
+	
+	            // CONFIG IDA:
+	            negociador.open("GET","recursos/"  + destino + ".txt");
+	            
+	            // CONFIG VUELTA
+	            negociador.onreadystatechange = function() {
+	            	
+	            	if (negociador.readyState === 4 && negociador.status === 200) {
+	            		
+	            		console.log("DESTINO SOLICITADO: " + destino);
+
+	            		
+	                    if(vezAnterior !== negociador.responseText)  {
+	                    	
+	                    	with(document.getElementById("pantalla")) {
+	                    		innerHTML = "<figure>";
+	                    		innerHTML += negociador.responseText;
+	                    		innerHTML += "<figcaption>" + destino.toUpperCase() + "</figcaption>";
+	                    		innerHTML += "</figure>";	                    		
+	                    	}
+	                    	
+	                    	vezAnterior = negociador.responseText;
+	                    	
+	                    	return;
+	            		
+	                    } else {
+	                    	console.log("\t >>> " + destino + " ESTA REPETIDO - SOLICITAR OTRO ...");
+	                    	
+	                    	/*
+	                    	
+								DESTINO SOLICITADO: asturias index.html:111:24
+								DESTINO SOLICITADO: asturias index.html:111:24
+									 >>> asturias ESTA REPETIDO - SOLICITAR OTRO ... index.html:128:31
+								DESTINO SOLICITADO: miami	                    	
+	                    	
+	                    	*/
+	                    	
+		            		// REPETIR:
+	                    	//alert("NO QUIERO REPETIR EL DESTINO DE LA VEZ PASADA ... \n" +
+	                    	//		"ANTES: " + vezAnterior + "AHORA: " + negociador.responseText);
+		            			
+		            		f_cogerVacacionesAJAX();
+	                    	
+	                    }
+	                    	                    
+	  	         	}
+	            	
+	  			};
+
+	  			
+	            // ENVIAR:
+	            negociador.send(null);
+	  			
+				///////////////////////////////////////////
+		
+			}
+				
+		</script>		
+		
+	</head>
+
+
+
+
+	<body>
+	
+		<div align="center">
+		
+			<h1> VACACIONES </h1>
+		
+			
+			<button onclick="f_cogerVacacionesAJAX();">
+				COGER VACIONES
+			</button>
+
+
+			<br/><br/>
+
+
+			<div id="pantalla"></div>
+
+		</div>
+		
+	</body>
+
+</html>

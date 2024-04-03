@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<script type="text/javascript">
+		
+			function f_ajax() {
+				
+				// 1)CREAR, 2)CONFIGURAR IDA, 3)CONFIGURAR VUELTA, 4)ENVIAR:
+				
+				const negociador = new XMLHttpRequest();
+				
+				negociador.open("POST", "generarGSON");
+				
+				//negociador.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				
+				negociador.setRequestHeader("Content-Type","application/json");
+				
+				
+				
+				const funcionRetorno = () => {
+					
+					if(negociador.readyState === 4 && negociador.status === 200) {
+						
+						alert("FUNCION DE RETORNO: \n\n\t\t PROCESAR LA RESPUESTA DEL SERVET");
+						
+						const respuestaServlet = negociador.responseXML;
+						
+						alert("RESPUESTA DEL SERVLET: \n\n\t\t " + respuestaServlet);
+						
+					}
+					
+				};
+				
+				
+				negociador.onreadystatechange = funcionRetorno;
+				
+				
+				
+				
+				//const persona = "pepe";
+				//
+				//negociador.send("persona=" + persona);
+				
+				
+				const persona = {
+										nombre:'PEPE',
+										apellidos:'GARCIA PEREZ'						
+								};
+				
+				
+				
+				const personaStringify = JSON.stringify(persona);
+				
+				alert("PERSONA stringify = " + personaStringify);
+				
+				//negociador.send("datosJSON=" + personaStringify);				
+				
+				negociador.send(personaStringify);
+				
+			}
+		
+		</script>
+		
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			<h1> EJEMPLO GSON JAVA </h1>
+			
+
+			<a href="generarGSON?persona='nombre':'PEPE'"> ENVIAR FAKE-JSON AL SERVLET </a>
+
+
+			<br/><br/><br/>
+			
+			
+			<button onclick="f_ajax();"> ENVIAR REAL-JSON AL SERVLET</button>
+
+		</div>
+		
+	</body>
+
+</html>

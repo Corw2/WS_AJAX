@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+        <script type="text/javascript">
+
+        	const ejecutarAJAX = () => {
+        
+	        	// OBJETO NEGOCIADOR AJAX:
+	            var negociador = new XMLHttpRequest();;
+	
+	            // CONFIG IDA:
+	            negociador.open("GET","recursos/mensaje.txt");
+	            
+	            // CONFIG VUELTA
+	            negociador.onreadystatechange = function() {
+	            	if (negociador.readyState===4 && negociador.status===200) {
+	                    document.getElementById("cajaTexto").innerHTML = negociador.responseText;
+	                    document.getElementById("cajaTexto").style.backgroundColor = "cyan";                
+	                }            	
+	            };
+	
+	            // ENVIAR:
+	            negociador.send(null);
+
+        	}
+            
+            
+        </script>
+        
+    </head>
+
+    
+    
+    <body>
+        <div align="center">
+            
+            <h3 style="color:blue">*** OBTENER DATOS DEL SERVIDOR WEB SIN RECARGAR LA PAGINA *** </h3>
+            
+            <p> 
+            	OBSERVAR COMO LA BARRA DE NAVEGACION NO CAMBIA (peticion asincrona)
+            </p>
+            
+            <br><br>
+            
+            <div id="cajaTexto" style="font-size:0.7cm; text-align:center; border-radius:25px; 
+            								border-style:double; margin:2cm; padding:30px;">
+                mensaje ... pulsa el botón.
+            </div>
+            
+            <br/><br/>
+            
+            
+            <button onclick="ejecutarAJAX();">
+            	RELLENAR            
+            </button>
+
+        </div>
+    </body>
+
+</html>
