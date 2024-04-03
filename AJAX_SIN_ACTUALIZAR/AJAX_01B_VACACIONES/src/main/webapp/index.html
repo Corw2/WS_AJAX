@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<script type="text/javascript">
+		
+			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+		
+		
+			// const DESTINOS = ["USA", "VERDE", "HATE", "PALILLOS"]; // 4
+					
+			// const DIRECTO = ["miami.txt", "asturias.txt", "java.txt", "bar.txt"];
+			
+			// https://www.geeksforgeeks.org/how-to-convert-map-keys-to-an-array-in-javascript/
+					
+			//alert(DESTINOS);
+
+					
+			const mapa = new Map();
+			
+			mapa.set("USA", 	 "miami.txt");
+			mapa.set("VERDE", 	 "asturias.txt");
+			mapa.set("HATE", 	 "java.txt");
+			mapa.set("PALILLOS", "bar.txt");
+				
+			// CONVERTIR LAS CLAVES DEL MAPA EN UN ARRAY
+			// (uso de la helper class Array de JavaScript):
+				
+			const DESTINOS = Array.from( mapa.keys() );
+									
+			function f_elegirDestinoAleatorio() {
+				
+				var aleatorio = parseInt(Math.random() * DESTINOS.length); // [0..3]
+				
+				console.log(DESTINOS[aleatorio]);
+				
+
+				//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get
+							" \n\n\t " + mapa.get(DESTINOS[aleatorio]));
+				
+				
+				return mapa.get( DESTINOS[aleatorio] ); // fichero .txt a ser obtenido por AJAX
+				
+			}
+				
+			// AJAX:
+			
+			function f_cogerVacacionesAJAX = () => {
+				
+				// OBJETO NEGOCIADOR AJAX:
+				var destino = new XMLHttpRequest();
+
+				// CONFIG IDA:
+				var urlAleatoria = f_elegirDestinoAleatorio();
+				destino.open("GET", $[urlAleatoria]);
+				
+				// CONFIG VUELTA
+				destino.onload = function () {
+					document.getElementById("pantalla").innerHTML = destino.responseText;
+				};
+
+				// ENVIAR:
+				destino.send(null);
+
+			}
+
+		</script>
+		
+</head>
+
+
+
+
+	<body>
+	
+		<div align="center">
+		
+			<h1> VACACIONES </h1>
+		
+			
+			<div id="pantalla"></div>
+
+
+			<button onclick="f_cogerVacacionesAJAX();">
+				COGER VACIONES
+			</button>
+
+		</div>
+		
+	</body>
+
+</html>

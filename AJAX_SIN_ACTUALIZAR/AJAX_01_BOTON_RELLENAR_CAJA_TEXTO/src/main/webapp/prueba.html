@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>DESARROLLO WEB</title>
+		
+		<script type="text/javascript">
+		
+			function f_crearParrafo() {
+				
+				alert("VAMOS A CREAR UN PÁRRAFO");
+				
+				document.querySelector("#pantalla").innerHTML =
+					`<p ${ onload=alert(' !!! PARRAFO CREADO !!! ') } > HOLA MUNDO </p>`;
+					
+			}
+		
+		</script>
+		
+	</head>
+
+
+	<body>
+	
+		<div align="center">
+			
+			<div id="pantalla"></div>
+
+			
+			<br/><br/><br/>
+			
+			
+			
+			 
+			<button onclick="f_crearParrafo();">
+				CREAR PARRAFO
+			</button>
+ 			
+		</div>
+		
+	</body>
+
+</html>
